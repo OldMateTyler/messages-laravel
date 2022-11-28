@@ -3,6 +3,7 @@
 use App\Http\Controllers\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,33 +21,36 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function(){
-    //get all
-    Route::get('messages', 'App\Http\Controllers\MessageController@show');
-    Route::get('threads', 'App\Http\Controllers\ThreadController@show');
-    Route::get('users', 'App\Http\Controllers\UserController@show');
+    //get all users messages
+    Route::get('messages', 'App\Http\Controllers\MessageController@show')->middleware('auth:sanctum');;
 
     //get users threads
-    Route::get('{user_id}/threads', 'App\Http\Controllers\ThreadController@getUsersThreads');
+    Route::get('user/threads', 'App\Http\Controllers\ThreadController@getUsersThreads')->middleware('auth:sanctum');
 
     //get threads messages
-    Route::get('{thread_id}/messages','App\Http\Controllers\MessageController@getThreadMessages');
+    Route::get('{thread_id}/messages','App\Http\Controllers\MessageController@getThreadMessages')->middleware('auth:sanctum');
 
     //get id
-    Route::get('messages/{message_id}', 'App\Http\Controllers\MessageController@getMessageByID');
-    Route::get('threads/{thread_id}', 'App\Http\Controllers\ThreadController@getThreadByID');
-    Route::get('users/{user_id}', 'App\Http\Controllers\UserController@getUserByID');
+    Route::get('messages/{message_id}', 'App\Http\Controllers\MessageController@getMessageByID')->middleware('auth:sanctum');
+    Route::get('threads/{thread_id}', 'App\Http\Controllers\ThreadController@getThreadByID')->middleware('auth:sanctum');
+    Route::get('users/{user_id}', 'App\Http\Controllers\UserController@getUserByID')->middleware('auth:sanctum');
 
     //update 
-    Route::patch('threads/{thread_id}', 'App\Http\Controllers\ThreadController@updateThread');
-    Route::patch('users/{user_id}', 'App\Http\Controllers\UserController@updateUser');
+    Route::patch('threads/{thread_id}', 'App\Http\Controllers\ThreadController@updateThread')->middleware('auth:sanctum');
+    Route::patch('users', 'App\Http\Controllers\UserController@updateUser')->middleware('auth:sanctum');
 
     //delete
-    Route::delete('messages/{message_id}', 'App\Http\Controllers\MessageController@deleteMessageByID');
-    Route::delete('threads/{thread_id}', 'App\Http\Controllers\ThreadController@deleteThreadByID');
-    Route::delete('users/{user_id}', 'App\Http\Controllers\UserController@deleteUserByID');
+    Route::delete('messages/{message_id}', 'App\Http\Controllers\MessageController@deleteMessageByID')->middleware('auth:sanctum');
+    Route::delete('threads/{thread_id}', 'App\Http\Controllers\ThreadController@deleteThreadByID')->middleware('auth:sanctum');
+    Route::delete('users', 'App\Http\Controllers\UserController@deleteUserByID')->middleware('auth:sanctum');
     
     //post 
-    Route::post('messages', 'App\Http\Controllers\MessageController@store');
-    Route::post('threads', 'App\Http\Controllers\ThreadController@store');
-    Route::post('users', 'App\Http\Controllers\UserController@store');
+    Route::post('messages', 'App\Http\Controllers\MessageController@store')->middleware('auth:sanctum');
+    Route::post('threads', 'App\Http\Controllers\ThreadController@store')->middleware('auth:sanctum');;
+
+    //authorisation api routes
+    Route::post('signin', 'App\Http\Controllers\AuthController@signIn');
+    Route::post('signup', 'App\Http\Controllers\AuthController@signUp');
+    Route::post('signout', 'App\Http\Controllers\AuthController@signOut');
+    Route::get('check', 'App\Http\Controllers\AuthController@check');
 });

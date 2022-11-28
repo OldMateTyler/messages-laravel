@@ -15,9 +15,9 @@ class ThreadController extends Controller
     		'threads' => $threads
     	], 200);
     }
-    public function getUsersThreads($user_id)
+    public function getUsersThreads(Request $request)
     {
-        $thread = Thread::where('userOne', '=', $user_id)->orWhere('userTwo', '=', $user_id)->get();
+        $thread = Thread::where('userOne', '=', $request->user('sanctum')->id)->orWhere('userTwo', '=', $request->user('sanctum')->id)->get();
         if ($thread) {
             return response()->json([
                 'threads' => $thread
@@ -29,9 +29,10 @@ class ThreadController extends Controller
                 ], 404);
         }
     }
-    public function getThreadByID($thread_id)
+    public function getThreadByID(Request $request, $thread_id)
     {
-        $thread = Thread::find($thread_id);
+        $thread = Thread::where('id', '=', $thread_id);
+        $thread = $thread->where('userOne', '=', $request->user('sanctum')->id)->orWhere('userTwo', '=', $request->user('sanctum')->id)->first();
         if ($thread) {
             return response()->json([
                 'threads' => $thread
@@ -44,9 +45,10 @@ class ThreadController extends Controller
         }
     }
 
-    public function deleteThreadByID($thread_id)
+    public function deleteThreadByID(Request $request, $thread_id)
     {
-        $thread = Thread::find($thread_id);
+        $thread = Thread::where('id', '=', $thread_id);
+        $thread = $thread->where('userOne', '=', $request->user('sanctum')->id)->orWhere('userTwo', '=', $request->user('sanctum')->id)->first();
         if ($thread) {
             $thread->delete();
             return response()->json([], 204);
@@ -58,7 +60,8 @@ class ThreadController extends Controller
         }
     }
     public function updateThread(Request $request, $thread_id){
-        $thread = Thread::find($thread_id);
+        $thread = Thread::where('id', '=', $thread_id);
+        $thread = $thread->where('userOne', '=', $request->user('sanctum')->id)->orWhere('userTwo', '=', $request->user('sanctum')->id)->first();
         if ($thread) {
               $name = $request->getContent();
               $name = explode(':"', $name)[1];
@@ -82,7 +85,7 @@ class ThreadController extends Controller
         ]);
 
         $thread = Thread::create([
-            'userOne' => $request->userOne,
+            'userOne' => $request->user('sanctum')->id,
             'userTwo' => $request->userTwo,
             'name' => $request->name
         ]);
