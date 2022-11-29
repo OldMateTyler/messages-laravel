@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('threads', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->string('thread_name')->nullable();
             $table->foreignId('userOne');
             $table->foreignId('userTwo');
+            $table->string('img_src')->default('https://cryptologos.cc/logos/chatcoin-chat-logo.png?v=023');
             $table->foreign('userOne')->references('id')->on('users')->onDeleteCascade();
             $table->foreign('userTwo')->references('id')->on('users')->onDeleteCascade();
         });

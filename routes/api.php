@@ -22,11 +22,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function(){
     //get all users messages
-    Route::get('messages', 'App\Http\Controllers\MessageController@show')->middleware('auth:sanctum');;
+    Route::get('messages', 'App\Http\Controllers\MessageController@show')->middleware('auth:sanctum');
 
+    Route::get('current-user', 'App\Http\Controllers\UserController@getCurrentUser')->middleware('auth:sanctum');
+    
     //get users threads
     Route::get('user/threads', 'App\Http\Controllers\ThreadController@getUsersThreads')->middleware('auth:sanctum');
-
+    Route::get('check-threads/{thread_id}', 'App\Http\Controllers\ThreadController@checkUsersThreads')->middleware('auth:sanctum');
     //get threads messages
     Route::get('{thread_id}/messages','App\Http\Controllers\MessageController@getThreadMessages')->middleware('auth:sanctum');
 
@@ -36,7 +38,7 @@ Route::prefix('v1')->group(function(){
     Route::get('users/{user_id}', 'App\Http\Controllers\UserController@getUserByID')->middleware('auth:sanctum');
 
     //update 
-    Route::patch('threads/{thread_id}', 'App\Http\Controllers\ThreadController@updateThread')->middleware('auth:sanctum');
+    Route::post('update-threads', 'App\Http\Controllers\ThreadController@updateThread')->middleware('auth:sanctum');
     Route::patch('users', 'App\Http\Controllers\UserController@updateUser')->middleware('auth:sanctum');
 
     //delete

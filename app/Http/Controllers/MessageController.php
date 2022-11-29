@@ -39,11 +39,15 @@ class MessageController extends Controller
     }
     public function getThreadMessages(Request $request, $thread_id)
     {
-        $message = Message::where('thread_id', '=', $thread_id);
-        $message = $message->where('author', '=', $request->user('sanctum')->id)->orWhere('recipient', '=', $request->user('sanctum')->id)->get();
+        $message = Message::select('messages.*', 'threads.thread_name', 'users.user_img')->where('thread_id', '=', $thread_id)->where(function($query) use ($request){
+            $query->where('author', '=', $request->user('sanctum')->id);
+            $query->orWhere('recipient', '=', $request->user('sanctum')->id);
+        })->join('threads', 'threads.id', '=', 'messages.thread_id')->join('users', function($join) use ($request){
+            $join->on('users.id', '=', 'messages.author')->where('messages.author', '!=', $request->user('sanctum')->id);
+            $join->orOn('users.id', '=', 'messages.author');
+        })->orderBy('messages.sent_at', 'ASC')->get();
         if ($message) {
-            return response()->json([
-                'messages' => $message
+            return response()->json([$message
             ], 200);
         } else {
         return response()->json([

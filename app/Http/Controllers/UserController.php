@@ -15,6 +15,14 @@ class UserController extends Controller
     		'users' => $users
     	], 200);
     }
+    public function getCurrentUser(Request $request){
+        $user = User::find($request->user('sanctum')->id);
+        if($user){
+            return response()->json([
+                $user
+            ], 200);
+        }
+    }
     public function getUserByID($user_id)
     {
         $user = User::find($user_id);

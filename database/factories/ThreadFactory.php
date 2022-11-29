@@ -18,7 +18,7 @@ class ThreadFactory extends Factory
     public function definition()
     {
         return [
-            'name'=> Str::random(5),
+            'thread_name'=> Str::random(5),
             'userOne'=> \App\Models\User::all()->random()->id,
             'userTwo'=> \App\Models\User::all()->random()->id,
         ];
