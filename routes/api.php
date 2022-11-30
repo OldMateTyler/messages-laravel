@@ -47,8 +47,8 @@ Route::prefix('v1')->group(function(){
     
     //post 
     Route::post('messages', 'App\Http\Controllers\MessageController@store')->middleware('auth:sanctum');
-    Route::post('threads', 'App\Http\Controllers\ThreadController@store')->middleware('auth:sanctum');;
-
+    Route::post('threads', 'App\Http\Controllers\ThreadController@store')->middleware('auth:sanctum');
+    Route::post('update-message-read/{thread_id}', 'App\Http\Controllers\ThreadController@updateMessageRead')->middleware('auth:sanctum');
     //authorisation api routes
     Route::post('signin', 'App\Http\Controllers\AuthController@signIn');
     Route::post('signup', 'App\Http\Controllers\AuthController@signUp');

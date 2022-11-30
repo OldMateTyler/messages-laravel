@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Models\Thread;
 use Illuminate\Support\Facades\DB;
@@ -16,11 +17,18 @@ class ThreadController extends Controller
     		'threads' => $threads
     	], 200);
     }
+    public function updateMessageRead(Request $request, $thread_id)
+    {
+        $threadMessages = Message::where('thread_id', '=', $thread_id)->where('recipient', '=', $request->user('sanctum')->id)->update(['read_at' => now()]);
+        return response()->json([], 200);
+    }
     public function getUsersThreads(Request $request)
     {
-        $thread = Thread::select('threads.*', 'users.name as user_name')->where('userOne', '=', $request->user('sanctum')->id)->orWhere('userTwo', '=', $request->user('sanctum')->id)->join('users', function($join) use ($request){
+        $thread = Thread::select('threads.*', 'users.name as user_name', 'messages.read_at', 'messages.body')->where('userOne', '=', $request->user('sanctum')->id)->orWhere('userTwo', '=', $request->user('sanctum')->id)->join('users', function($join) use ($request){
             $join->on('users.id', '=', 'threads.userOne')->where('threads.userOne', '!=', $request->user('sanctum')->id);
             $join->orOn('users.id', '=', 'threads.userTwo')->where('threads.userTwo', '!=', $request->user('sanctum')->id);
+        })->leftJoin('messages', function($join) use ($request){
+            $join->on('messages.thread_id', '=', 'threads.id')->where('messages.read_at', '=', null)->where('messages.recipient', '=', $request->user('sanctum')->id);
         })->get();
         if ($thread) {
             return response()->json([
