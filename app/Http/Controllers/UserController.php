@@ -7,12 +7,11 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
-    	$users = User::get();
+    	$users = User::select('users.id', 'users.name')->where('id', '!=', $request->user('sanctum')->id)->get();
 
-    	return response()->json([
-    		'users' => $users
+    	return response()->json([$users
     	], 200);
     }
     public function getCurrentUser(Request $request){
@@ -53,14 +52,9 @@ class UserController extends Controller
     public function updateUser(Request $request){
         $user = User::find($request->user('sanctum')->id);
         if ($user) {
-              $req = $request->getContent();
-              $name = explode(':"', $req)[1];
-              $email = explode('":', $name)[1];
-              $name = explode('"', $name)[0];
-              $email = str_replace(array('}', '"'), '', $email);
-              $name = preg_replace("/[^a-zA-Z0-9]+/", "", $name);
-              $user->name = $name;
-              $user->email = $email;
+              $user->name = $request->name;
+              $user->email = $request->email;
+              $user->user_img = $request->user_img;
               $user->save();
               return response()->json([], 200);
         } else {

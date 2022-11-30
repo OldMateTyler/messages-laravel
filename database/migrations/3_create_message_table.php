@@ -21,9 +21,9 @@ return new class extends Migration
             $table->foreignId('author');
             $table->foreignId('recipient');
             $table->foreignId('thread_id');
-            $table->foreign('thread_id')->references('id')->on('threads')->onDeleteCascade();
-            $table->foreign('author')->references('id')->on('users')->onDeleteCascade();
-            $table->foreign('recipient')->references('id')->on('users')->onDeleteCascade();
+            $table->foreign('thread_id')->references('id')->on('threads')->onDelete('cascade');
+            $table->foreign('author')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('recipient')->references('id')->on('users')->onDelete('cascade');
 
         });
     }

@@ -13,8 +13,9 @@ class Thread extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name',
+        'thread_name',
         'userOne',
         'userTwo',
+        'img_src',
     ];
 }

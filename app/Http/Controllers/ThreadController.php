@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Thread;
+use Illuminate\Support\Facades\DB;
 
 class ThreadController extends Controller
 {
@@ -102,23 +103,37 @@ class ThreadController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'userOne' => 'required|integer',
-            'userTwo' => 'required|integer',
-            'name' => 'required|string'
+            'userTwo' => 'required',
+            'thread_name' => 'required|string',
+            'img_src' => 'required'
         ]);
-
-        $thread = Thread::create([
-            'userOne' => $request->user('sanctum')->id,
-            'userTwo' => $request->userTwo,
-            'name' => $request->name
-        ]);
-        if ($thread) {
-            return response()->json([], 200);
-        } else {
-        return response()->json([
-                'type' => 'users',
-                'message' => 'Unable to create thread'
-            ], 404);
+        DB::enableQueryLog();
+        $dupThread = Thread::where(function ($query) use ($request){
+            $query->where('userOne', '=', $request->user('sanctum')->id)->where('userTwo', '=', (int)$request->userTwo);
+        })->where(function ($query) use ($request){
+            $query->where('userOne', '=', (int)$request->userTwo)->where('userTwo', '=', $request->user('sanctum')->id);
+        })->get();
+        if($dupThread){
+            $thread = Thread::create([
+                'userOne' => $request->user('sanctum')->id,
+                'userTwo' => $request->userTwo,
+                'thread_name' => $request->thread_name,
+                'img_src' => $request->img_src
+            ]);
+            if ($thread) {
+                return response()->json([], 200);
+            } else {
+            return response()->json([
+                    'type' => 'users',
+                    'message' => 'Unable to create thread'
+                ], 404);
+            }
         }
+        else{
+            return response()->json(
+                ['Thread already exists'], 201
+            );
+        }
+
     }
 }

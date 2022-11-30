@@ -58,19 +58,14 @@ class MessageController extends Controller
     }
     public function deleteMessageByID(Request $request, $message_id)
     {
-        $message = Message::find($message_id)->where('author', '=', $request->user('sanctum')->id);
+        $message = Message::where('id', '=', $message_id)->where('author', '=', $request->user('sanctum')->id);
         if ($message) {
             $message->delete();
-            return response()->json([], 204);
-        } else {
-            return response()->json([
-                'type' => 'messages',
-                'message' => 'Not Found'
-            ], 404);
         }
     }
     public function store(Request $request)
     {
+        date_default_timezone_set('Australia/Sydney');
         $this->validate($request, [
             'body' => 'required|string',
             'author' => 'required|integer',
@@ -83,6 +78,7 @@ class MessageController extends Controller
             'author' => $request->user('sanctum')->id,
             'recipient' => $request->recipient,
             'thread_id' => $request->thread_id,
+            'sent_at' => now()
         ]);
         if ($message) {
             return response()->json([], 200);
