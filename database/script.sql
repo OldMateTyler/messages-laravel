@@ -1,0 +1,23 @@
+INSERT INTO users VALUES(null, 'Tyler Simmonds', 'tyler.simmonds254@gmail.com', now(), '$2y$10$6qvmICWNvW996wEBFTig8OdxHoHKclvo7ro1SgndWOaW13I/TDCjm' , 'https://www.webics.com.au/wp-content/uploads/2022/09/tyler.jpg', NULL, NOW(), NOW());
+INSERT INTO users VALUES(null, 'Kevin Hart', 'kevin.hart@gmail.com', now(), '$2y$10$6qvmICWNvW996wEBFTig8OdxHoHKclvo7ro1SgndWOaW13I/TDCjm', 'https://flxt.tmsimg.com/assets/108359_v9_bc.jpg', NULL, NOW(), NOW());
+INSERT INTO users VALUES(null, 'William Ferrel', 'william.ferrel@gmail.com',now(),  '$2y$10$6qvmICWNvW996wEBFTig8OdxHoHKclvo7ro1SgndWOaW13I/TDCjm', 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Will_Ferrell_2012.jpg/220px-Will_Ferrell_2012.jpg', NULL, NOW(), NOW());
+INSERT INTO users VALUES(null, 'Mark Wahlberg', 'mark.wahlberg@gmail.com', now(), '$2y$10$6qvmICWNvW996wEBFTig8OdxHoHKclvo7ro1SgndWOaW13I/TDCjm' , 'https://m.media-amazon.com/images/M/MV5BMTU0MTQ4OTMyMV5BMl5BanBnXkFtZTcwMTQxOTY1NA@@._V1_.jpg', NULL, NOW(), NOW());
+INSERT INTO users VALUES(null, 'Paul Rudd', 'paul.rudd@gmail.com', now(), '$2y$10$6qvmICWNvW996wEBFTig8OdxHoHKclvo7ro1SgndWOaW13I/TDCjm', 'https://hips.hearstapps.com/hmg-prod/images/actor-paul-rudd-speaks-about-his-latest-movie-ant-man-at-news-photo-481013220-1566491372.jpg?crop=0.668xw:1.00xh;0.0442xw,0&resize=640:*', NULL, NOW(), NOW());
+INSERT INTO users VALUES(null, 'Ryan Reynolds', 'ryan.reynolds@gmail.com', now(), '$2y$10$6qvmICWNvW996wEBFTig8OdxHoHKclvo7ro1SgndWOaW13I/TDCjm', 'https://resizing.flixster.com/TFRlx6Db5kLH57XyZnwyOXARwr0=/218x280/v2/https://flxt.tmsimg.com/assets/57282_v9_bb.jpg', NULL, NOW(), NOW());
+INSERT INTO users VALUES(null, "Adam Sandler", 'adam.sandler@gmail.com', now(), '$2y$10$6qvmICWNvW996wEBFTig8OdxHoHKclvo7ro1SgndWOaW13I/TDCjm', 'https://media.gq.com/photos/59230af034edbe5f3532edd0/master/w_2346,h_3100,c_limit/adam-sandler.jpg', NULL, NOW(), NOW());
+INSERT INTO users VALUES(null, "Chris Rock", 'chris.rock@gmail.com', now(), '$2y$10$6qvmICWNvW996wEBFTig8OdxHoHKclvo7ro1SgndWOaW13I/TDCjm', 'https://upload.wikimedia.org/wikipedia/commons/8/89/Chris_Rock_2014.jpg', NULL, NOW(), NOW());
+
+INSERT INTO threads VALUES(null, 'Soccer', 1,2,'https://static01.nyt.com/images/2022/11/28/world/28world-cup-carousel-broggy10/merlin_217511298_22c377a6-734d-49db-9395-b836e3398cc6-threeByTwoMediumAt2X.jpg');
+INSERT INTO threads VALUES(null, 'UFC', 1,3,'https://img.bleacherreport.net/cms/media/image/a2/e4/93/84/1d39/47a4/9ec2/9165fb96f414/crop_exact_GettyImages-1441079457.jpg?h=2807&q=90&w=4203');
+INSERT INTO threads VALUES(null, 'NRL', 1,4,'https://www.nrl.com/remote.axd?https://flex.nrl.ooflex.net/keyframedownloadcontroller?id=390758&max_height=1920&max_width=1920?center=0.096%2C0.51&preset=video-player-1224x688');
+INSERT INTO threads VALUES(null, 'Tennis', 1,5,'https://cdn.britannica.com/57/183257-050-0BA11B4B/Roger-Federer-2012.jpg');
+INSERT INTO threads VALUES(null, 'NFL', 1,6,'https://e00-marca.uecdn.es/assets/multimedia/imagenes/2022/11/29/16697017673167.jpg');
+
+INSERT INTO messages VALUES(null, now(), NULL, "tortor pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus sed viverra tellus in hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper",1, 2,1);
+INSERT INTO messages VALUES(null, now(), NULL, "justo donec enim diam vulputate ut pharetra sit",1, 2, 1);
+INSERT INTO messages VALUES(null, now(), NULL, "facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis eu volutpat odio",2, 1,1);
+INSERT INTO messages VALUES(null, now(), NULL, "risus sed vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam",1, 3,2);
+INSERT INTO messages VALUES(null, now(), NULL, "massa tincidunt dui ut ornare lectus sit amet est",4, 1,3);
+INSERT INTO messages VALUES(null, now(), NULL, "pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas maecenas pharetra convallis posuere morbi",5, 1,4);
+INSERT INTO messages VALUES(null, now(), NULL, "maecenas sed enim ut sem viverra aliquet eget sit amet tellus cras adipiscing enim eu",1, 6,5);
+INSERT INTO messages VALUES(null, now(), NULL, "morbi leo urna molestie at elementum eu facilisis sed odio morbi quis commodo odio aenean sed adipiscing diam donec adipiscing tristique risus nec feugiat in fermentum posuere urna nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida hendrerit",6, 1,5);
